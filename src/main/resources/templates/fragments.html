@@ -18,21 +18,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/index}"><i class="fa fa-home"></i>Home</a>
+                    <a class="nav-link" href="#" th:href="@{~/api/main}"><i class="fa fa-home"></i>Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/profile/index}">Profile</a>
+                    <a class="nav-link" href="#" th:href="@{~/api/profile}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/admin/index}">Admin</a>
+                    <a class="nav-link" href="#" th:href="@{~/api/admin}">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/management/index}">Management</a>
+                    <a class="nav-link" href="#" th:href="@{~/api/manage}">Management</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">
+            <form class="form-inline my-2 my-lg-0" form-method="post">
                 <button class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout</button>
-                <button th:href="@{~/login}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>
+                <button th:href="@{~/api/login}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>
             </form>
         </div>
     </nav>

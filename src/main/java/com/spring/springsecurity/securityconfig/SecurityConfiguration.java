@@ -11,19 +11,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser("ahmed")
                 .password(passwordEncoder().encode("ahmed123"))
-                .roles("ADMIN")
-                .authorities("ACCESS_BASIC1")
+                //.roles("ADMIN")
+                .authorities("ACCESS_BASIC1","ROLE_ADMIN")
                 .and()
                 .withUser("yaser")
                 .password(passwordEncoder().encode("yaser123"))
-                .roles("MANGER")
-                .authorities("ACCESS_BASIC2")
+                //.roles("MANGER")
+                .authorities("ACCESS_BASIC2","ROLE_MANGER")
                 .and()
                 .withUser("karim")
                 .password(passwordEncoder().encode("karim123"))

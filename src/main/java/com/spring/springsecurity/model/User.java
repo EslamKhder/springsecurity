@@ -3,7 +3,6 @@ package com.spring.springsecurity.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -14,7 +13,7 @@ public class User {
     private Long id;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -47,8 +46,8 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String password, String age, String address, int active) {
-        this.userName = userName;
+    public User(String username, String password, String age, String address, int active) {
+        this.username = username;
         this.password = password;
         this.age = age;
         this.address = address;
@@ -63,12 +62,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {

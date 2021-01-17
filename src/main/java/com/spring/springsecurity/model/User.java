@@ -29,14 +29,6 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns ={ @JoinColumn(name = "role_id")}
-    )
-    private List<Role> roles = new ArrayList<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
             name = "user_authorities",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns ={ @JoinColumn(name = "authorities_id")}
@@ -100,14 +92,6 @@ public class User {
 
     public void setActive(int active) {
         this.active = active;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 
     public List<Authorities> getAuthorities() {

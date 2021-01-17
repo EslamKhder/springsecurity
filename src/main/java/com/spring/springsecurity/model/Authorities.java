@@ -1,8 +1,8 @@
 package com.spring.springsecurity.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "authorities")
@@ -16,7 +16,7 @@ public class Authorities {
     private String authoritieName;
 
     @ManyToMany(mappedBy = "authorities")
-    private List<User> users;
+    private List<User> users =new ArrayList<>();
 
     public Authorities() {
     }

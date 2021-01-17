@@ -1,6 +1,7 @@
 package com.spring.springsecurity.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     public Role() {
     }

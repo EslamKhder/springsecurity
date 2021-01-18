@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:insert="fragments.html :: headerfiles"></head>
 <body>
@@ -10,11 +11,11 @@
     <table>
         <tr>
             <td>Username</td>
-            <td><span></span></td>
+            <td><span sec:authentication="name"></span></td>
         </tr>
         <tr>
             <td>Authorities</td>
-            <td><span></span></td>
+            <td><span sec:authentication="principal.authorities"></span></td>
         </tr>
     </table>
 </div>

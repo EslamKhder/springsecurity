@@ -35,7 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/basic/allbasic").hasAuthority("ACCESS_BASIC2")
                 //.anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .loginPage("/api/login").permitAll();
     }
     @Bean
     DaoAuthenticationProvider authenticationProvider(){

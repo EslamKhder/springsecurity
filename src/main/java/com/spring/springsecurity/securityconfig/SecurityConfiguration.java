@@ -41,12 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(),this.userRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .antMatchers("/api/main").permitAll()
-                .antMatchers("/api/profile").authenticated()
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
-                .antMatchers("/api/manage").hasAnyRole("ADMIN","MANGER")
-                .antMatchers("/api/basic/mybasic").hasAuthority("ACCESS_BASIC1")
-                .antMatchers("/api/basic/allbasic").hasAuthority("ACCESS_BASIC2")
+                .antMatchers("/api/myadmin").hasRole("ADMIN")
+                .antMatchers("/api/myadminmanget").hasAnyRole("ADMIN","MANGER")
+                .antMatchers("/api/myadminmangeruser").hasAnyRole("ADMIN","MANGER","USER")
                 .anyRequest().authenticated();
     }
     @Bean

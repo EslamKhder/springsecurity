@@ -17,6 +17,7 @@ public class ApiSystem {
     public String adminOrManger(){
         return "i am admin || Manger";
     }
+
     @GetMapping("myadminmangeruser")
     public String adminOrMangerOrUser(){
         return "i am admin || Manger || User";

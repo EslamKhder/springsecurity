@@ -1,45 +1,45 @@
-package com.spring.springsecurity.securityconfig.jwt;
+package com.spring.springsecurity.service;
 
 import com.auth0.jwt.JWT;
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.springsecurity.dto.ResponseLogin;
 import com.spring.springsecurity.model.JwtLogin;
 import com.spring.springsecurity.model.UserPrincipal;
+import com.spring.springsecurity.securityconfig.jwt.JwtProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Service;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
+
+@Service
+public class TokenService {
+
     private AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    @Autowired
+    public TokenService(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
-        // Grab credentials and map them to login viewmodel
-        JwtLogin credentials = null;
-        try {
-            credentials = new ObjectMapper().readValue(request.getInputStream(), JwtLogin.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Authentication attemptAuthentication(JwtLogin jwtLogin) throws AuthenticationException {
 
         // Create login token
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                credentials.getUsername(),
-                credentials.getPassword(),
+                jwtLogin.getUsername(),
+                jwtLogin.getPassword(),
                 new ArrayList<>());
 
         // Authenticate user
@@ -48,11 +48,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return auth;
     }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    public ResponseLogin successfulAuthentication(JwtLogin jwtLogin) throws Exception {
+        ResponseLogin responseLogin  = new ResponseLogin();
+        Authentication authResult = attemptAuthentication(jwtLogin);
 
         // Grab principal
         UserPrincipal principal = (UserPrincipal) authResult.getPrincipal();
+
+        responseLogin.setUsername(jwtLogin.getUsername());
 
         // Create JWT Token
         String token = JWT.create()
@@ -60,7 +63,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
-        // Add token in response
-        response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX +  token);
+        responseLogin.setToken(token);
+        return responseLogin;
     }
 }
